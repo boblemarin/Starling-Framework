@@ -2,17 +2,17 @@ package utils
 {
     import flash.geom.Point;
     
-    import starling.display.DisplayObject;
-    import starling.display.Sprite;
+    import starling.display.StDisplayObject;
+    import starling.display.StSprite;
     import starling.events.Touch;
-    import starling.events.TouchEvent;
+    import starling.events.StTouchEvent;
     import starling.events.TouchPhase;
 
-    public class TouchSheet extends Sprite
+    public class TouchSheet extends StSprite
     {
-        public function TouchSheet(contents:DisplayObject=null)
+        public function TouchSheet(contents:StDisplayObject=null)
         {
-            addEventListener(TouchEvent.TOUCH, onTouch);
+            addEventListener(StTouchEvent.TOUCH, onTouch);
             
             if (contents)
             {
@@ -22,7 +22,7 @@ package utils
             }
         }
         
-        private function onTouch(event:TouchEvent):void
+        private function onTouch(event:StTouchEvent):void
         {
             var touches:Vector.<Touch> = event.getTouches(this, TouchPhase.MOVED);
             
@@ -86,7 +86,7 @@ package utils
         
         public override function dispose():void
         {
-            removeEventListener(TouchEvent.TOUCH, onTouch);
+            removeEventListener(StTouchEvent.TOUCH, onTouch);
             super.dispose();
         }
     }

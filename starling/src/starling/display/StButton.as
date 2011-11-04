@@ -12,17 +12,17 @@ package starling.display
 {
     import flash.geom.Rectangle;
     
-    import starling.events.Event;
+    import starling.events.StEvent;
     import starling.events.Touch;
-    import starling.events.TouchEvent;
+    import starling.events.StTouchEvent;
     import starling.events.TouchPhase;
-    import starling.text.TextField;
+    import starling.text.StTextField;
     import starling.textures.Texture;
     import starling.utils.HAlign;
     import starling.utils.VAlign;
 
     /** Dispatched when the user triggers the button. Bubbles. */
-    [Event(name="triggered", type="starling.events.Event")]
+    [Event(name="triggered", type="starling.events.StEvent")]
     
     /** A simple button composed of an image and, optionally, text.
      *  
@@ -36,16 +36,16 @@ package starling.display
      *  this event instead of normal touch events - that way, users can cancel button activation
      *  by moving the mouse/finger away from the button before releasing.</p> 
      */ 
-    public class Button extends DisplayObjectContainer
+    public class StButton extends StDisplayObjectContainer
     {
         private static const MAX_DRAG_DIST:Number = 50;
         
         private var mUpState:Texture;
         private var mDownState:Texture;
         
-        private var mContents:Sprite;
-        private var mBackground:Image;
-        private var mTextField:TextField;
+        private var mContents:StSprite;
+        private var mBackground:StImage;
+        private var mTextField:StTextField;
         private var mTextBounds:Rectangle;
         
         private var mScaleWhenDown:Number;
@@ -54,23 +54,23 @@ package starling.display
         private var mIsDown:Boolean;
         
         /** Creates a button with textures for up- and down-state or text. */
-        public function Button(upState:Texture, text:String="", downState:Texture=null)
+        public function StButton(upState:Texture, text:String="", downState:Texture=null)
         {
             if (upState == null) throw new ArgumentError("Texture cannot be null");
             
             mUpState = upState;
             mDownState = downState ? downState : upState;
-            mBackground = new Image(upState);
+            mBackground = new StImage(upState);
             mScaleWhenDown = downState ? 1.0 : 0.9;
             mAlphaWhenDisabled = 0.5;
             mEnabled = true;
             mIsDown = false;
             mTextBounds = new Rectangle(0, 0, upState.width, upState.height);            
             
-            mContents = new Sprite();
+            mContents = new StSprite();
             mContents.addChild(mBackground);
             addChild(mContents);
-            addEventListener(TouchEvent.TOUCH, onTouch);
+            addEventListener(StTouchEvent.TOUCH, onTouch);
             
             if (text.length != 0) this.text = text;
         }
@@ -87,7 +87,7 @@ package starling.display
         {
             if (mTextField == null)
             {
-                mTextField = new TextField(mTextBounds.width, mTextBounds.height, "");
+                mTextField = new StTextField(mTextBounds.width, mTextBounds.height, "");
                 mTextField.vAlign = VAlign.CENTER;
                 mTextField.hAlign = HAlign.CENTER;
                 mTextField.touchable = false;
@@ -101,7 +101,7 @@ package starling.display
             mTextField.y = mTextBounds.y;
         }
         
-        private function onTouch(event:TouchEvent):void
+        private function onTouch(event:StTouchEvent):void
         {
             var touch:Touch = event.getTouch(this);
             if (!mEnabled || touch == null) return;
@@ -129,7 +129,7 @@ package starling.display
             else if (touch.phase == TouchPhase.ENDED && mIsDown)
             {
                 resetContents();
-                dispatchEvent(new Event(Event.TRIGGERED, true));
+                dispatchEvent(new StEvent(StEvent.TRIGGERED, true));
             }
         }
         

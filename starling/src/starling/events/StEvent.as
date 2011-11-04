@@ -32,7 +32,7 @@ package starling.events
      * 
      *  @see EventDispatcher
      */
-    public class Event
+    public class StEvent
     {
         /** Event type for a display object that is added to a parent. */
         public static const ADDED:String = "added";
@@ -53,15 +53,15 @@ package starling.events
         /** Event type for a resized Flash Player. */
         public static const RESIZE:String = "resize";
         
-        private var mTarget:EventDispatcher;
-        private var mCurrentTarget:EventDispatcher;
+        private var mTarget:StEventDispatcher;
+        private var mCurrentTarget:StEventDispatcher;
         private var mType:String;
         private var mBubbles:Boolean;
         private var mStopsPropagation:Boolean;
         private var mStopsImmediatePropagation:Boolean;
         
         /** Creates an event object that can be passed to listeners. */
-        public function Event(type:String, bubbles:Boolean=false)
+        public function StEvent(type:String, bubbles:Boolean=false)
         {
             mType = type;
             mBubbles = bubbles;
@@ -87,13 +87,13 @@ package starling.events
         }
         
         /** @private */
-        internal function setTarget(target:EventDispatcher):void 
+        internal function setTarget(target:StEventDispatcher):void 
         { 
             mTarget = target; 
         }
         
         /** @private */
-        internal function setCurrentTarget(currentTarget:EventDispatcher):void 
+        internal function setCurrentTarget(currentTarget:StEventDispatcher):void 
         { 
             mCurrentTarget = currentTarget; 
         }
@@ -108,10 +108,10 @@ package starling.events
         public function get bubbles():Boolean { return mBubbles; }
         
         /** The object that dispatched the event. */
-        public function get target():EventDispatcher { return mTarget; }
+        public function get target():StEventDispatcher { return mTarget; }
         
         /** The object the event is currently bubbling at. */
-        public function get currentTarget():EventDispatcher { return mCurrentTarget; }
+        public function get currentTarget():StEventDispatcher { return mCurrentTarget; }
         
         /** A string that identifies the event. */
         public function get type():String { return mType; }

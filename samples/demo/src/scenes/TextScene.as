@@ -1,7 +1,7 @@
 package scenes
 {
     import starling.text.BitmapFont;
-    import starling.text.TextField;
+    import starling.text.StTextField;
     import starling.utils.Color;
     import starling.utils.HAlign;
     import starling.utils.VAlign;
@@ -21,7 +21,7 @@ package scenes
             var ttFont:String = "Ubuntu";
             var ttFontSize:int = 19; 
             
-            var colorTF:TextField = new TextField(300, 80, 
+            var colorTF:StTextField = new StTextField(300, 80, 
                 "TextFields can have a border and a color. They can be aligned in different ways, ...", 
                 ttFont, ttFontSize);
             colorTF.x = colorTF.y = offset;
@@ -29,7 +29,7 @@ package scenes
             colorTF.color = 0x333399;
             addChild(colorTF);
             
-            var leftTF:TextField = new TextField(145, 80,
+            var leftTF:StTextField = new StTextField(145, 80,
                 "... e.g.\ntop-left ...", ttFont, ttFontSize);
             leftTF.x = offset;
             leftTF.y = colorTF.y + colorTF.height + offset;
@@ -39,7 +39,7 @@ package scenes
             leftTF.color = 0x993333;
             addChild(leftTF);
             
-            var rightTF:TextField = new TextField(145, 80,
+            var rightTF:StTextField = new StTextField(145, 80,
                 "... or\nbottom right ...", ttFont, ttFontSize);
             rightTF.x = 2*offset + leftTF.width;
             rightTF.y = leftTF.y;
@@ -49,7 +49,7 @@ package scenes
             rightTF.border = true;
             addChild(rightTF);
             
-            var fontTF:TextField = new TextField(300, 80,
+            var fontTF:StTextField = new StTextField(300, 80,
                 "... or centered. Embedded fonts are detected automatically.",
                 ttFont, ttFontSize, 0x0, true);
             fontTF.x = offset;
@@ -69,7 +69,7 @@ package scenes
             // Look at the file "Assets.as" to see how this is done.
             // After that, you can use them just like a conventional TrueType font.
             
-            var bmpFontTF:TextField = new TextField(300, 150, 
+            var bmpFontTF:StTextField = new StTextField(300, 150, 
                 "It is very easy to use Bitmap fonts, as well!", "Desyrel");
             
             bmpFontTF.fontSize = BitmapFont.NATIVE_SIZE; // the native bitmap font size, no scaling

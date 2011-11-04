@@ -17,7 +17,7 @@ package starling.events
      *  can easily make animations that are independet of the frame rate, taking the passed time
      *  into account.
      */ 
-    public class EnterFrameEvent extends Event
+    public class StEnterFrameEvent extends StEvent
     {
         /** Event type for a display object that is entering a new frame. */
         public static const ENTER_FRAME:String = "enterFrame";
@@ -25,7 +25,7 @@ package starling.events
         private var mPassedTime:Number;
         
         /** Creates an enter frame event with the passed time. */
-        public function EnterFrameEvent(type:String, passedTime:Number, bubbles:Boolean=false)
+        public function StEnterFrameEvent(type:String, passedTime:Number, bubbles:Boolean=false)
         {
             super(type, bubbles);
             mPassedTime = passedTime;

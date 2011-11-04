@@ -18,22 +18,22 @@ package starling.display
     import starling.core.RenderSupport;
     import starling.errors.AbstractClassError;
     import starling.errors.AbstractMethodError;
-    import starling.events.Event;
-    import starling.events.EventDispatcher;
-    import starling.events.TouchEvent;
+    import starling.events.StEvent;
+    import starling.events.StEventDispatcher;
+    import starling.events.StTouchEvent;
     
     /** Dispatched when an object is added to a parent. */
-    [Event(name="added", type="starling.events.Event")]
+    [Event(name="added", type="starling.events.StEvent")]
     /** Dispatched when an object is connected to the stage (directly or indirectly). */
-    [Event(name="addedToStage", type="starling.events.Event")]
+    [Event(name="addedToStage", type="starling.events.StEvent")]
     /** Dispatched when an object is removed from its parent. */
-    [Event(name="removed", type="starling.events.Event")]
+    [Event(name="removed", type="starling.events.StEvent")]
     /** Dispatched when an object is removed from the stage and won't be rendered any longer. */ 
-    [Event(name="removedFromStage", type="starling.events.Event")]
+    [Event(name="removedFromStage", type="starling.events.StEvent")]
     /** Dispatched once every frame on every object that is connected to the stage. */ 
-    [Event(name="enterFrame", type="starling.events.EnterFrameEvent")]
+    [Event(name="enterFrame", type="starling.events.StEnterFrameEvent")]
     /** Dispatched when an object is touched. Bubbles. */
-    [Event(name="touch", type="starling.events.TouchEvent")]
+    [Event(name="touch", type="starling.events.StTouchEvent")]
     
     /**
      *  The DisplayObject class is the base class for all objects that are rendered on the 
@@ -94,7 +94,7 @@ package starling.display
      *  @see Sprite
      *  @see Stage 
      */
-    public class DisplayObject extends EventDispatcher
+    public class StDisplayObject extends StEventDispatcher
     {
         // members
         
@@ -111,10 +111,10 @@ package starling.display
         
         private var mName:String;
         private var mLastTouchTimestamp:Number;
-        private var mParent:DisplayObjectContainer;        
+        private var mParent:StDisplayObjectContainer;        
         
         /** @private */ 
-        public function DisplayObject()
+        public function StDisplayObject()
         {
             if (getQualifiedClassName(this) == "starling.display::DisplayObject")
                 throw new AbstractClassError();
@@ -141,7 +141,7 @@ package starling.display
         
         /** Creates a matrix that represents the transformation from the local coordinate system 
          * to another. */ 
-        public function getTransformationMatrix(targetSpace:DisplayObject):Matrix
+        public function getTransformationMatrix(targetSpace:StDisplayObject):Matrix
         {
             var rootMatrix:Matrix;
             var targetMatrix:Matrix;
@@ -176,9 +176,9 @@ package starling.display
             
             // 1. find a common parent of this and the target space
             
-            var ancestors:Vector.<DisplayObject> = new <DisplayObject>[];
-            var commonParent:DisplayObject = null;
-            var currentObject:DisplayObject = this;            
+            var ancestors:Vector.<StDisplayObject> = new <StDisplayObject>[];
+            var commonParent:StDisplayObject = null;
+            var currentObject:StDisplayObject = this;            
             while (currentObject)
             {
                 ancestors.push(currentObject);
@@ -225,7 +225,7 @@ package starling.display
         
         /** Returns a rectangle that completely encloses the object as it appears in another 
          *  coordinate system. */ 
-        public function getBounds(targetSpace:DisplayObject):Rectangle
+        public function getBounds(targetSpace:StDisplayObject):Rectangle
         {
             throw new AbstractMethodError("Method needs to be implemented in subclass");
             return null;
@@ -234,7 +234,7 @@ package starling.display
         /** Returns the object that is found topmost beneath a point in local coordinates, or nil if 
          *  the test fails. If "forTouch" is true, untouchable and invisible objects will cause
          *  the test to fail. */
-        public function hitTest(localPoint:Point, forTouch:Boolean=false):DisplayObject
+        public function hitTest(localPoint:Point, forTouch:Boolean=false):StDisplayObject
         {
             // on a touch test, invisible or untouchable objects cause the test to fail
             if (forTouch && (!mVisible || !mTouchable)) return null;
@@ -249,7 +249,7 @@ package starling.display
         {
             // move up  until parent is null
             var transformationMatrix:Matrix = new Matrix();
-            var currentObject:DisplayObject = this;
+            var currentObject:StDisplayObject = this;
             while (currentObject)
             {
                 transformationMatrix.concat(currentObject.transformationMatrix);
@@ -263,7 +263,7 @@ package starling.display
         {
             // move up until parent is null, then invert matrix
             var transformationMatrix:Matrix = new Matrix();
-            var currentObject:DisplayObject = this;
+            var currentObject:StDisplayObject = this;
             while (currentObject)
             {
                 transformationMatrix.concat(currentObject.transformationMatrix);
@@ -283,13 +283,13 @@ package starling.display
         }
         
         /** @inheritDoc */
-        public override function dispatchEvent(event:Event):void
+        public override function dispatchEvent(event:StEvent):void
         {
             // on one given moment, there is only one set of touches -- thus, 
             // we process only one touch event with a certain timestamp per frame
-            if (event is TouchEvent)
+            if (event is StTouchEvent)
             {
-                var touchEvent:TouchEvent = event as TouchEvent;
+                var touchEvent:StTouchEvent = event as StTouchEvent;
                 if (touchEvent.timestamp == mLastTouchTimestamp) return;
                 else mLastTouchTimestamp = touchEvent.timestamp;
             }
@@ -300,13 +300,13 @@ package starling.display
         // internal methods
         
         /** @private */
-        internal function setParent(value:DisplayObjectContainer):void 
+        internal function setParent(value:StDisplayObjectContainer):void 
         { 
             mParent = value; 
         }
         
         /** @private */
-        internal function dispatchEventOnChildren(event:Event):void 
+        internal function dispatchEventOnChildren(event:StEvent):void 
         { 
             dispatchEvent(event); 
         }
@@ -356,9 +356,9 @@ package starling.display
         }
         
         /** The topmost object in the display tree the object is part of. */
-        public function get root():DisplayObject
+        public function get root():StDisplayObject
         {
-            var currentObject:DisplayObject = this;
+            var currentObject:StDisplayObject = this;
             while (currentObject.parent) currentObject = currentObject.parent;
             return currentObject;
         }
@@ -419,10 +419,10 @@ package starling.display
         public function set name(value:String):void { mName = value; }        
         
         /** The display object container that contains this display object. */
-        public function get parent():DisplayObjectContainer { return mParent; }
+        public function get parent():StDisplayObjectContainer { return mParent; }
         
         /** The stage the display object is connected to, or null if it is not connected 
          *  to a stage. */
-        public function get stage():Stage { return this.root as Stage; }
+        public function get stage():StStage { return this.root as StStage; }
     }
 }

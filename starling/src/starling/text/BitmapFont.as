@@ -13,9 +13,9 @@ package starling.text
     import flash.geom.Rectangle;
     import flash.utils.Dictionary;
     
-    import starling.display.DisplayObject;
-    import starling.display.Image;
-    import starling.display.Sprite;
+    import starling.display.StDisplayObject;
+    import starling.display.StImage;
+    import starling.display.StSprite;
     import starling.textures.Texture;
     import starling.utils.HAlign;
     import starling.utils.VAlign;
@@ -135,17 +135,17 @@ package starling.text
                                             fontSize:Number=-1, color:uint=0xffffff, 
                                             hAlign:String="center", vAlign:String="center",      
                                             autoScale:Boolean=true, 
-                                            kerning:Boolean=true):DisplayObject
+                                            kerning:Boolean=true):StDisplayObject
         {
             if (fontSize == NATIVE_SIZE) fontSize = mSize;
             
-            var lineContainer:Sprite;
+            var lineContainer:StSprite;
             var finished:Boolean = false;
             
             while (!finished)
             {
                 var scale:Number = fontSize / mSize;
-                lineContainer = new Sprite();
+                lineContainer = new StSprite();
                 
                 if (mLineHeight * scale <= height)
                 {
@@ -156,7 +156,7 @@ package starling.text
                     var lastWhiteSpace:int = -1;
                     var lastCharID:int = -1;
                     var currentX:Number = 0;
-                    var currentLine:Sprite = new Sprite();
+                    var currentLine:StSprite = new StSprite();
                     var numChars:int = text.length;
                 
                     for (var i:int=0; i<numChars; ++i)
@@ -181,7 +181,7 @@ package starling.text
                             if (charID == CHAR_SPACE || charID == CHAR_TAB)
                                 lastWhiteSpace = i;
                             
-                            var charImage:Image = bitmapChar.createImage();
+                            var charImage:StImage = bitmapChar.createImage();
                             
                             if (kerning)
                                 currentX += bitmapChar.getKerning(lastCharID);
@@ -206,7 +206,7 @@ package starling.text
                                 if (currentLine.numChildren == 0)
                                     break;
                                 
-                                var lastChar:DisplayObject = currentLine.getChildAt(currentLine.numChildren-1);
+                                var lastChar:StDisplayObject = currentLine.getChildAt(currentLine.numChildren-1);
                                 currentX = lastChar.x + lastChar.width;
                                 
                                 i -= numCharsToRemove;
@@ -226,7 +226,7 @@ package starling.text
                             
                             if (nextLineY + mLineHeight <= containerHeight)
                             {
-                                currentLine = new Sprite();
+                                currentLine = new StSprite();
                                 currentLine.y = nextLineY;
                                 currentX = 0;
                                 lastWhiteSpace = -1;
@@ -257,15 +257,15 @@ package starling.text
                 var numLines:int = lineContainer.numChildren;
                 for (var l:int=0; l<numLines; ++l)
                 {
-                    var line:Sprite = lineContainer.getChildAt(l) as Sprite;
-                    var finalChar:DisplayObject = line.getChildAt(line.numChildren-1);
+                    var line:StSprite = lineContainer.getChildAt(l) as StSprite;
+                    var finalChar:StDisplayObject = line.getChildAt(line.numChildren-1);
                     var lineWidth:Number = finalChar.x + finalChar.width;
                     var widthDiff:Number = containerWidth - lineWidth;
                     line.x = int(hAlign == HAlign.RIGHT ? widthDiff : widthDiff / 2);
                 }
             }
             
-            var outerContainer:Sprite = new Sprite();
+            var outerContainer:StSprite = new StSprite();
             outerContainer.addChild(lineContainer);
             
             if (vAlign != VAlign.TOP)

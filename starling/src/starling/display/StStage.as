@@ -13,17 +13,17 @@ package starling.display
     import flash.errors.IllegalOperationError;
     import flash.geom.Point;
     
-    import starling.events.EnterFrameEvent;
-    import starling.events.Event;
+    import starling.events.StEnterFrameEvent;
+    import starling.events.StEvent;
     
     /** Dispatched when the Flash container is resized. */
-    [Event(name="resize", type="starling.events.ResizeEvent")]
+    [Event(name="resize", type="starling.events.StResizeEvent")]
     
     /** Dispatched when a key on the keyboard is released. */
-    [Event(name="keyUp", type="starling.events.KeyboardEvent")]
+    [Event(name="keyUp", type="starling.events.StKeyboardEvent")]
     
     /** Dispatched when a key on the keyboard is pressed. */
-    [Event(name="keyDown", type="starling.events.KeyboardEvent")]
+    [Event(name="keyDown", type="starling.events.StKeyboardEvent")]
     
     /** A Stage represents the root of the display tree.  
      *  Only objects that are direct or indirect children of the stage will be rendered.
@@ -51,14 +51,14 @@ package starling.display
      *  @see starling.events.ResizeEvent  
      * 
      * */
-    public class Stage extends DisplayObjectContainer
+    public class StStage extends StDisplayObjectContainer
     {
         private var mWidth:int;
         private var mHeight:int;
         private var mColor:uint;
         
         /** @private */
-        public function Stage(width:int, height:int, color:uint=0)
+        public function StStage(width:int, height:int, color:uint=0)
         {
             mWidth = width;
             mHeight = height;
@@ -68,18 +68,18 @@ package starling.display
         /** @inheritDoc */
         public function advanceTime(passedTime:Number):void
         {
-            dispatchEventOnChildren(new EnterFrameEvent(Event.ENTER_FRAME, passedTime));
+            dispatchEventOnChildren(new StEnterFrameEvent(StEvent.ENTER_FRAME, passedTime));
         }
 
         /** Returns the object that is found topmost beneath a point in stage coordinates, or  
          *  the stage itself if nothing else is found. */
-        public override function hitTest(localPoint:Point, forTouch:Boolean=false):DisplayObject
+        public override function hitTest(localPoint:Point, forTouch:Boolean=false):StDisplayObject
         {
             if (forTouch && (!visible || !touchable))
                 return null;
             
             // if nothing else is hit, the stage returns itself as target
-            var target:DisplayObject = super.hitTest(localPoint, forTouch);
+            var target:StDisplayObject = super.hitTest(localPoint, forTouch);
             if (target == null) target = this;
             return target;
         }

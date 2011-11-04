@@ -6,7 +6,7 @@ package
     import flash.utils.Dictionary;
     
     import starling.text.BitmapFont;
-    import starling.text.TextField;
+    import starling.text.StTextField;
     import starling.textures.Texture;
     import starling.textures.TextureAtlas;
 
@@ -118,7 +118,7 @@ package
             {
                 var texture:Texture = getTexture("DesyrelTexture");
                 var xml:XML = XML(new DesyrelXml());
-                TextField.registerBitmapFont(new BitmapFont(texture, xml));
+                StTextField.registerBitmapFont(new BitmapFont(texture, xml));
                 sBitmapFontsLoaded = true;
             }
         }

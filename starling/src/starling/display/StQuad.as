@@ -43,7 +43,7 @@ package starling.display
      * 
      *  @see Image
      */
-    public class Quad extends DisplayObject
+    public class StQuad extends StDisplayObject
     {
         /** The name of the shader program used when a quad is rendered. The program is registered
          *  under this name at the Starling object. */
@@ -59,7 +59,7 @@ package starling.display
         protected var mIndexBuffer:IndexBuffer3D;
         
         /** Creates a quad with a certain size and color. */
-        public function Quad(width:Number, height:Number, color:uint=0xffffff)
+        public function StQuad(width:Number, height:Number, color:uint=0xffffff)
         {
             mVertexData = new VertexData(4, true);
             mVertexData.setPosition(0, 0.0, 0.0);
@@ -79,7 +79,7 @@ package starling.display
         }
         
         /** @inheritDoc */
-        public override function getBounds(targetSpace:DisplayObject):Rectangle
+        public override function getBounds(targetSpace:StDisplayObject):Rectangle
         {
             var minX:Number = Number.MAX_VALUE, maxX:Number = -Number.MAX_VALUE;
             var minY:Number = Number.MAX_VALUE, maxY:Number = -Number.MAX_VALUE;

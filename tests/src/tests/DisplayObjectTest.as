@@ -20,8 +20,8 @@ package tests
     import org.flexunit.asserts.assertEquals;
     import org.hamcrest.number.closeTo;
     
-    import starling.display.Quad;
-    import starling.display.Sprite;
+    import starling.display.StQuad;
+    import starling.display.StSprite;
     import starling.utils.deg2rad;
 
     public class DisplayObjectTest
@@ -31,9 +31,9 @@ package tests
         [Test]
         public function testRoot():void
         {
-            var object1:Sprite = new Sprite();
-            var object2:Sprite = new Sprite();
-            var object3:Sprite = new Sprite();
+            var object1:StSprite = new StSprite();
+            var object2:StSprite = new StSprite();
+            var object3:StSprite = new StSprite();
             
             object1.addChild(object2);
             object2.addChild(object3);
@@ -46,8 +46,8 @@ package tests
         [Test]
         public function testGetTransformationMatrix():void
         {
-            var sprite:Sprite = new Sprite();
-            var child:Sprite = new Sprite();
+            var sprite:StSprite = new StSprite();
+            var child:StSprite = new StSprite();
             child.x = 30;
             child.y = 20;
             child.scaleX = 1.2;
@@ -69,7 +69,7 @@ package tests
         [Test]
         public function testBounds():void
         {
-            var quad:Quad = new Quad(10, 20);
+            var quad:StQuad = new StQuad(10, 20);
             quad.x = -10;
             quad.y =  10;
             quad.rotation = Math.PI / 2;
@@ -90,7 +90,7 @@ package tests
         [Test]
         public function testZeroSize():void
         {
-            var sprite:Sprite = new Sprite();
+            var sprite:StSprite = new StSprite();
             assertEquals(1.0, sprite.scaleX);
             assertEquals(1.0, sprite.scaleY);
             
@@ -104,7 +104,7 @@ package tests
             
             // setting a value to zero should be no problem -- and the original size 
             // should be remembered.
-            var quad:Quad = new Quad(100, 200);
+            var quad:StQuad = new StQuad(100, 200);
             quad.scaleX = 0.0;
             quad.scaleY = 0.0;
             assertThat(quad.width, closeTo(0, E));
@@ -119,10 +119,10 @@ package tests
         [Test]
         public function testLocalToGlobal():void
         {
-            var sprite:Sprite = new Sprite();
+            var sprite:StSprite = new StSprite();
             sprite.x = 10;
             sprite.y = 20;
-            var sprite2:Sprite = new Sprite();
+            var sprite2:StSprite = new StSprite();
             sprite2.x = 150;
             sprite2.y = 200;
             sprite.addChild(sprite2);
@@ -136,10 +136,10 @@ package tests
         [Test]
         public function testGlobalToLocal():void
         {
-            var sprite:Sprite = new Sprite();
+            var sprite:StSprite = new StSprite();
             sprite.x = 10;
             sprite.y = 20;
-            var sprite2:Sprite = new Sprite();
+            var sprite2:StSprite = new StSprite();
             sprite2.x = 150;
             sprite2.y = 200;
             sprite.addChild(sprite2);
@@ -153,7 +153,7 @@ package tests
         [Test]
         public function testHitTestPoint():void
         {
-            var quad:Quad = new Quad(25, 10);            
+            var quad:StQuad = new StQuad(25, 10);            
             Assert.assertNotNull(quad.hitTest(new Point(15, 5), true));
             Assert.assertNotNull(quad.hitTest(new Point(0, 0), true));
             Assert.assertNotNull(quad.hitTest(new Point(24.99, 0), true));
@@ -177,7 +177,7 @@ package tests
         [Test]
         public function testRotation():void
         {
-            var quad:Quad = new Quad(100, 100);
+            var quad:StQuad = new StQuad(100, 100);
             quad.rotation = deg2rad(400);
             assertThat(quad.rotation, closeTo(deg2rad(40), E));
             quad.rotation = deg2rad(220);
@@ -207,10 +207,10 @@ package tests
             // a quad with a pivot point should behave exactly as a quad without 
             // pivot point inside a sprite
             
-            var sprite:Sprite = new Sprite();
-            var innerQuad:Quad = new Quad(width, height);
+            var sprite:StSprite = new StSprite();
+            var innerQuad:StQuad = new StQuad(width, height);
             sprite.addChild(innerQuad);            
-            var quad:Quad = new Quad(width, height);            
+            var quad:StQuad = new StQuad(width, height);            
             Helpers.compareRectangles(sprite.bounds, quad.bounds);
             
             innerQuad.x = -50;
@@ -234,7 +234,7 @@ package tests
         [Test]
         public function testName():void
         {
-            var sprite:Sprite = new Sprite();
+            var sprite:StSprite = new StSprite();
             Assert.assertNull(sprite.name);
             
             sprite.name = "hugo";

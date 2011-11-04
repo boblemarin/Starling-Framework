@@ -22,7 +22,7 @@ package starling.events
      *  @see starling.display.Stage
      *  @see starling.core.Starling
      */
-	public class ResizeEvent extends Event
+	public class StResizeEvent extends StEvent
 	{
 		/** Event type for a resized Flash player. */
         public static const RESIZE:String = "resize";
@@ -31,7 +31,7 @@ package starling.events
 		private var mHeight:int;
 		
         /** Creates a new ResizeEvent. */
-		public function ResizeEvent(type:String, width:int, height:int, bubbles:Boolean=false)
+		public function StResizeEvent(type:String, width:int, height:int, bubbles:Boolean=false)
 		{
 			super(type, bubbles);
 			mWidth = width;

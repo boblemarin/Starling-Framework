@@ -15,8 +15,8 @@ package starling.textures
     
     import starling.core.RenderSupport;
     import starling.core.Starling;
-    import starling.display.DisplayObject;
-    import starling.display.Image;
+    import starling.display.StDisplayObject;
+    import starling.display.StImage;
     import starling.utils.VertexData;
     import starling.utils.getNextPowerOfTwo;
 
@@ -50,7 +50,7 @@ package starling.textures
     {
         private var mActiveTexture:Texture;
         private var mBufferTexture:Texture;
-        private var mHelperImage:Image;
+        private var mHelperImage:StImage;
         private var mDrawing:Boolean;
         
         private var mNativeWidth:int;
@@ -72,7 +72,7 @@ package starling.textures
             if (persistent)
             {
                 mBufferTexture = Texture.empty(width, height, 0x0, true);
-                mHelperImage = new Image(mBufferTexture);
+                mHelperImage = new StImage(mBufferTexture);
             }
         }
         
@@ -92,7 +92,7 @@ package starling.textures
         
         /** Draws an object onto the texture, adhering its properties for position, scale, rotation 
          *  and alpha. */
-        public function draw(object:DisplayObject, antiAliasing:int=0):void
+        public function draw(object:StDisplayObject, antiAliasing:int=0):void
         {
             if (object == null) return;
             

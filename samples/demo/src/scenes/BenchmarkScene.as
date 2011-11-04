@@ -2,20 +2,20 @@ package scenes
 {
     import flash.system.System;
     
-    import starling.display.Button;
-    import starling.display.Image;
-    import starling.display.Sprite;
-    import starling.events.EnterFrameEvent;
-    import starling.events.Event;
-    import starling.text.TextField;
+    import starling.display.StButton;
+    import starling.display.StImage;
+    import starling.display.StSprite;
+    import starling.events.StEnterFrameEvent;
+    import starling.events.StEvent;
+    import starling.text.StTextField;
     import starling.utils.formatString;
 
     public class BenchmarkScene extends Scene
     {
-        private var mStartButton:Button;
-        private var mResultText:TextField;
+        private var mStartButton:StButton;
+        private var mResultText:StTextField;
         
-        private var mContainer:Sprite;
+        private var mContainer:StSprite;
         private var mFrameCount:int;
         private var mElapsed:Number;
         private var mStarted:Boolean;
@@ -27,13 +27,13 @@ package scenes
             super();
             
             // the container will hold all test objects
-            mContainer = new Sprite();
+            mContainer = new StSprite();
             mContainer.touchable = false; // we do not need touch events on the test objects -- 
                                           // thus, it is more efficient to disable them.
             addChildAt(mContainer, 0);
             
-            mStartButton = new Button(Assets.getTexture("ButtonNormal"), "Start benchmark");
-            mStartButton.addEventListener(Event.TRIGGERED, onStartButtonTriggered);
+            mStartButton = new StButton(Assets.getTexture("ButtonNormal"), "Start benchmark");
+            mStartButton.addEventListener(StEvent.TRIGGERED, onStartButtonTriggered);
             mStartButton.x = Constants.CenterX - int(mStartButton.width / 2);
             mStartButton.y = 20;
             addChild(mStartButton);
@@ -41,17 +41,17 @@ package scenes
             mStarted = false;
             mElapsed = 0.0;
             
-            addEventListener(Event.ENTER_FRAME, onEnterFrame);
+            addEventListener(StEvent.ENTER_FRAME, onEnterFrame);
         }
         
         public override function dispose():void
         {
-            removeEventListener(Event.ENTER_FRAME, onEnterFrame);
-            mStartButton.removeEventListener(Event.TRIGGERED, onStartButtonTriggered);
+            removeEventListener(StEvent.ENTER_FRAME, onEnterFrame);
+            mStartButton.removeEventListener(StEvent.TRIGGERED, onStartButtonTriggered);
             super.dispose();
         }
         
-        private function onEnterFrame(event:EnterFrameEvent):void
+        private function onEnterFrame(event:StEnterFrameEvent):void
         {
             if (!mStarted) return;
             
@@ -89,7 +89,7 @@ package scenes
                 mContainer.getChildAt(i).rotation += Math.PI / 2 * passedTime;
         }
         
-        private function onStartButtonTriggered(event:Event):void
+        private function onStartButtonTriggered(event:StEvent):void
         {
             trace("Starting benchmark");
             
@@ -111,7 +111,7 @@ package scenes
         private function addTestObject():void
         {
             var padding:int = 15;
-            var egg:Image = new Image(Assets.getTexture("BenchmarkObject"));
+            var egg:StImage = new StImage(Assets.getTexture("BenchmarkObject"));
             egg.x = padding + Math.random() * (Constants.GameWidth - 2 * padding);
             egg.y = padding + Math.random() * (Constants.GameHeight - 2 * padding);
             mContainer.addChild(egg);
@@ -128,7 +128,7 @@ package scenes
             
             var resultString:String = formatString("Result:\n{0} objects\nwith {1} fps",
                                                    mContainer.numChildren, Constants.FPS);
-            mResultText = new TextField(240, 200, resultString);
+            mResultText = new StTextField(240, 200, resultString);
             mResultText.fontSize = 30;
             mResultText.x = Constants.CenterX - mResultText.width / 2;
             mResultText.y = Constants.CenterY - mResultText.height / 2;

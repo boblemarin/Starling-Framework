@@ -2,11 +2,11 @@ package scenes
 {
     import flash.geom.Point;
     
-    import starling.display.Image;
+    import starling.display.StImage;
     import starling.events.Touch;
-    import starling.events.TouchEvent;
+    import starling.events.StTouchEvent;
     import starling.events.TouchPhase;
-    import starling.text.TextField;
+    import starling.text.StTextField;
     import starling.textures.RenderTexture;
     import starling.utils.HAlign;
     import starling.utils.VAlign;
@@ -14,31 +14,31 @@ package scenes
     public class RenderTextureScene extends Scene
     {
         private var mRenderTexture:RenderTexture;
-        private var mBrush:Image;
+        private var mBrush:StImage;
         
         public function RenderTextureScene()
         {
             var description:String = "Touch the screen to draw eggs!";
             
-            var infoText:TextField = new TextField(300, 50, description);
+            var infoText:StTextField = new StTextField(300, 50, description);
             infoText.x = infoText.y = 10;
             infoText.vAlign = VAlign.TOP;
             infoText.hAlign = HAlign.CENTER;
             addChild(infoText);
             
-            mBrush = new Image(Assets.getTexture("EggOpened"));
+            mBrush = new StImage(Assets.getTexture("EggOpened"));
             mBrush.pivotX = mBrush.width / 2;
             mBrush.pivotY = mBrush.height / 2;
             mBrush.scaleX = mBrush.scaleY = 0.5;
             
             mRenderTexture = new RenderTexture(320, 435); 
             
-            var canvas:Image = new Image(mRenderTexture);
-            canvas.addEventListener(TouchEvent.TOUCH, onTouch);
+            var canvas:StImage = new StImage(mRenderTexture);
+            canvas.addEventListener(StTouchEvent.TOUCH, onTouch);
             addChild(canvas);
         }
         
-        private function onTouch(event:TouchEvent):void
+        private function onTouch(event:StTouchEvent):void
         {
             var touches:Vector.<Touch> = event.getTouches(this);
             

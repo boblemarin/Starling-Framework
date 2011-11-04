@@ -12,7 +12,7 @@ package starling.events
 {
     import flash.utils.Dictionary;
     
-    import starling.display.DisplayObject;
+    import starling.display.StDisplayObject;
     
     /** The EventDispatcher class is the base class for all classes that dispatch events. 
      *  This is the Starling version of the Flash class with the same name. 
@@ -32,12 +32,12 @@ package starling.events
      *  @see Event
      *  @see starling.display.DisplayObject DisplayObject
      */
-    public class EventDispatcher
+    public class StEventDispatcher
     {
         private var mEventListeners:Dictionary;
         
         /** Creates an EventDispatcher. */
-        public function EventDispatcher()
+        public function StEventDispatcher()
         {  }
         
         /** Registers an event listener at a certain object. */
@@ -80,7 +80,7 @@ package starling.events
         }
         
         /** Dispatches an event to all objects that have registered for events of the same type. */
-        public function dispatchEvent(event:Event):void
+        public function dispatchEvent(event:StEvent):void
         {
             var listeners:Vector.<Function> = mEventListeners ? mEventListeners[event.type] : null;
             if (listeners == null && !event.bubbles) return; // no need to do anything
@@ -88,7 +88,7 @@ package starling.events
             // if the event already has a current target, it was re-dispatched by user -> we change 
             // the target to 'this' for now, but undo that later on (instead of creating a clone)
 
-            var previousTarget:EventDispatcher = event.target;
+            var previousTarget:StEventDispatcher = event.target;
             if (previousTarget == null || event.currentTarget != null) event.setTarget(this);
             
             var stopImmediatePropagation:Boolean = false;
@@ -110,9 +110,9 @@ package starling.events
             }
             
             if (!stopImmediatePropagation && event.bubbles && !event.stopsPropagation && 
-                this is DisplayObject)
+                this is StDisplayObject)
             {
-                var targetDisplayObject:DisplayObject = this as DisplayObject;
+                var targetDisplayObject:StDisplayObject = this as StDisplayObject;
                 if (targetDisplayObject.parent != null)
                 {
                     event.setCurrentTarget(null); // to find out later if the event was redispatched

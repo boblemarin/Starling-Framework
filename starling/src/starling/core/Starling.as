@@ -32,11 +32,11 @@ package starling.core
     import flash.utils.getTimer;
     
     import starling.animation.Juggler;
-    import starling.display.DisplayObject;
-    import starling.display.Image;
-    import starling.display.Quad;
-    import starling.display.Stage;
-    import starling.events.ResizeEvent;
+    import starling.display.StDisplayObject;
+    import starling.display.StImage;
+    import starling.display.StQuad;
+    import starling.display.StStage;
+    import starling.events.StResizeEvent;
     import starling.events.TouchPhase;
     import starling.events.TouchProcessor;
     
@@ -109,7 +109,7 @@ package starling.core
         // members
         
         private var mStage3D:Stage3D;
-        private var mStage:Stage; // starling.display.stage!
+        private var mStage:StStage; // starling.display.stage!
         private var mRootClass:Class;
         private var mJuggler:Juggler;
         private var mStarted:Boolean;        
@@ -153,7 +153,7 @@ package starling.core
             mRootClass = rootClass;
             mViewPort = viewPort;
             mStage3D = stage3D;
-            mStage = new Stage(viewPort.width, viewPort.height, stage.color);
+            mStage = new StStage(viewPort.width, viewPort.height, stage.color);
             mNativeStage = stage;
             mTouchProcessor = new TouchProcessor(mStage);
             mJuggler = new Juggler();
@@ -214,15 +214,15 @@ package starling.core
         
         private function initializePrograms():void
         {
-            Quad.registerPrograms(this);
-            Image.registerPrograms(this);
+            StQuad.registerPrograms(this);
+            StImage.registerPrograms(this);
         }
         
         private function initializeRoot():void
         {
             if (mStage.numChildren > 0) return;
             
-            var rootObject:DisplayObject = new mRootClass();
+            var rootObject:StDisplayObject = new mRootClass();
             if (rootObject == null) throw new Error("Invalid root class: " + mRootClass);
             mStage.addChild(rootObject);
         }
@@ -330,7 +330,7 @@ package starling.core
         
         private function onKey(event:KeyboardEvent):void
         {
-            mStage.dispatchEvent(new starling.events.KeyboardEvent(
+            mStage.dispatchEvent(new starling.events.StKeyboardEvent(
                 event.type, event.charCode, event.keyCode, event.keyLocation, 
                 event.ctrlKey, event.altKey, event.shiftKey));
         }
@@ -338,7 +338,7 @@ package starling.core
         private function onResize(event:flash.events.Event):void
         {
             var stage:flash.display.Stage = event.target as flash.display.Stage; 
-            mStage.dispatchEvent(new ResizeEvent(Event.RESIZE, stage.stageWidth, stage.stageHeight));
+            mStage.dispatchEvent(new StResizeEvent(Event.RESIZE, stage.stageWidth, stage.stageHeight));
         }
 
         private function onTouch(event:Event):void
@@ -486,7 +486,7 @@ package starling.core
         }
         
         /** The Starling stage object, which is the root of the display tree that is rendered. */
-        public function get stage():Stage
+        public function get stage():StStage
         {
             return mStage;
         }

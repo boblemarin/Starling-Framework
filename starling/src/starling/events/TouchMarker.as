@@ -12,12 +12,12 @@ package starling.events
 {
     import flash.geom.Point;
     
-    import starling.display.Image;
-    import starling.display.Sprite;
+    import starling.display.StImage;
+    import starling.display.StSprite;
     import starling.textures.Texture;
     
     /** The TouchMarker is used internally to mark touches created through "simulateMultitouch". */
-    internal class TouchMarker extends Sprite
+    internal class TouchMarker extends StSprite
     {
         [Embed(source="../../assets/touch_marker.png")]
         private static var TouchMarkerBmp:Class;
@@ -32,7 +32,7 @@ package starling.events
             
             for (var i:int=0; i<2; ++i)
             {
-                var marker:Image = new Image(mTexture);
+                var marker:StImage = new StImage(mTexture);
                 marker.pivotX = mTexture.width / 2;
                 marker.pivotY = mTexture.height / 2;
                 marker.touchable = false;
@@ -67,8 +67,8 @@ package starling.events
             moveMarker(realX, realY); // reset mock position
         }
         
-        private function get realMarker():Image { return getChildAt(0) as Image; }
-        private function get mockMarker():Image { return getChildAt(1) as Image; }
+        private function get realMarker():StImage { return getChildAt(0) as StImage; }
+        private function get mockMarker():StImage { return getChildAt(1) as StImage; }
         
         public function get realX():Number { return realMarker.x; }
         public function get realY():Number { return realMarker.y; }

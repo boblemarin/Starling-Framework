@@ -42,13 +42,13 @@ package starling.display
      *  @see starling.textures.Texture
      *  @see Quad
      */ 
-    public class Image extends Quad
+    public class StImage extends StQuad
     {
         private var mTexture:Texture;
         private var mSmoothing:String;
         
         /** Creates a quad with a texture mapped onto it. */
-        public function Image(texture:Texture)
+        public function StImage(texture:Texture)
         {
             if (texture)
             {
@@ -79,9 +79,9 @@ package starling.display
         }
         
         /** Creates an Image with a texture that is created from a bitmap object. */
-        public static function fromBitmap(bitmap:Bitmap):Image
+        public static function fromBitmap(bitmap:Bitmap):StImage
         {
-            return new Image(Texture.fromBitmap(bitmap));
+            return new StImage(Texture.fromBitmap(bitmap));
         }
         
         /** Sets the texture coordinates of a vertex. Coordinates are in the range [0, 1]. */

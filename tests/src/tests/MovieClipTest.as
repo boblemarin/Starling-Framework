@@ -15,8 +15,8 @@ package tests
     import org.flexunit.assertThat;
     import org.hamcrest.number.closeTo;
     
-    import starling.display.MovieClip;
-    import starling.events.Event;
+    import starling.display.StMovieClip;
+    import starling.events.StEvent;
     import starling.textures.ConcreteTexture;
     import starling.textures.Texture;
 
@@ -35,7 +35,7 @@ package tests
             var texture2:Texture = new ConcreteTexture(null, 16, 16, false, false);
             var texture3:Texture = new ConcreteTexture(null, 16, 16, false, false);
             
-            var movie:MovieClip = new MovieClip(new <Texture>[texture0], fps);
+            var movie:StMovieClip = new StMovieClip(new <Texture>[texture0], fps);
             
             assertThat(movie.width, closeTo(texture0.width, E));
             assertThat(movie.height, closeTo(texture0.height, E));
@@ -103,7 +103,7 @@ package tests
             var texture2:Texture = new ConcreteTexture(null, 16, 16, false, false);
             var texture3:Texture = new ConcreteTexture(null, 16, 16, false, false);
             
-            var movie:MovieClip = new MovieClip(new <Texture>[texture0], fps);
+            var movie:StMovieClip = new StMovieClip(new <Texture>[texture0], fps);
             movie.addFrame(texture1);
             movie.addFrame(texture2, null, 0.5);
             movie.addFrame(texture3);
@@ -144,7 +144,7 @@ package tests
             var texture1:Texture = new ConcreteTexture(null, 16, 16, false, false);
             var texture2:Texture = new ConcreteTexture(null, 16, 16, false, false);
             
-            var movie:MovieClip = new MovieClip(new <Texture>[texture0, texture1, texture2], 4.0);
+            var movie:StMovieClip = new StMovieClip(new <Texture>[texture0, texture1, texture2], 4.0);
             assertThat(movie.fps, closeTo(4.0, E));
             
             movie.fps = 3.0;
@@ -177,8 +177,8 @@ package tests
             var texture3:Texture = new ConcreteTexture(null, 16, 16, false, false);
             var textures:Vector.<Texture> = new <Texture>[texture0, texture1, texture2, texture3];
             
-            var movie:MovieClip = new MovieClip(textures, fps);
-            movie.addEventListener(Event.MOVIE_COMPLETED, onMovieCompleted);
+            var movie:StMovieClip = new StMovieClip(textures, fps);
+            movie.addEventListener(StEvent.MOVIE_COMPLETED, onMovieCompleted);
             movie.loop = false;
             
             movie.advanceTime(frameDuration);
@@ -206,7 +206,7 @@ package tests
             movie.advanceTime(movie.numFrames * 2 * frameDuration);
             Assert.assertEquals(3, completedCount);
             
-            function onMovieCompleted(event:Event):void
+            function onMovieCompleted(event:StEvent):void
             {
                 completedCount++;
             }

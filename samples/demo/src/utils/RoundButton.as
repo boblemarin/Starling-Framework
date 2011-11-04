@@ -3,18 +3,18 @@ package utils
     import flash.geom.Point;
     import flash.geom.Rectangle;
     
-    import starling.display.Button;
-    import starling.display.DisplayObject;
+    import starling.display.StButton;
+    import starling.display.StDisplayObject;
     import starling.textures.Texture;
     
-    public class RoundButton extends Button
+    public class RoundButton extends StButton
     {
         public function RoundButton(upState:Texture, text:String="", downState:Texture=null)
         {
             super(upState, text, downState);
         }
         
-        public override function hitTest(localPoint:Point, forTouch:Boolean=false):DisplayObject
+        public override function hitTest(localPoint:Point, forTouch:Boolean=false):StDisplayObject
         {
             // When the user touches the screen, this method is used to find out if an object was 
             // hit. By default, this method uses the bounding box, but by overriding it, 

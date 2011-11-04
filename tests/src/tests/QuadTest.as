@@ -12,7 +12,7 @@ package tests
 {
     import flexunit.framework.Assert;
     
-    import starling.display.Quad;
+    import starling.display.StQuad;
     import starling.utils.Color;
 
     public class QuadTest
@@ -20,14 +20,14 @@ package tests
         [Test]
         public function testQuad():void
         {
-            var quad:Quad = new Quad(100, 200, Color.AQUA);            
+            var quad:StQuad = new StQuad(100, 200, Color.AQUA);            
             Assert.assertEquals(Color.AQUA, quad.color);            
         }
         
         [Test]
         public function testColors():void
         {
-            var quad:Quad = new Quad(100, 100);            
+            var quad:StQuad = new StQuad(100, 100);            
             quad.setVertexColor(0, Color.AQUA);
             quad.setVertexColor(1, Color.BLACK);
             quad.setVertexColor(2, Color.BLUE);

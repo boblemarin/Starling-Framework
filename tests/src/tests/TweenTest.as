@@ -17,7 +17,7 @@ package tests
     
     import starling.animation.Transitions;
     import starling.animation.Tween;
-    import starling.display.Quad;
+    import starling.display.StQuad;
 
     public class TweenTest
     {
@@ -38,7 +38,7 @@ package tests
             var updateCount:int = 0;
             var completeCount:int = 0;
             
-            var quad:Quad = new Quad(100, 100);
+            var quad:StQuad = new StQuad(100, 100);
             quad.x = startX;
             quad.y = startY;
             quad.alpha = startAlpha;
@@ -80,7 +80,7 @@ package tests
         {
             var startPos:Number  = 0.0;
             var targetPos:Number = 50.0;
-            var quad:Quad = new Quad(100, 100);
+            var quad:StQuad = new StQuad(100, 100);
             
             // 2 tweens should move object up, then down
             var tween1:Tween = new Tween(quad, 1.0);
@@ -106,7 +106,7 @@ package tests
         [Test]
         public function testTweenFromZero():void
         {
-            var quad:Quad = new Quad(100, 100);
+            var quad:StQuad = new StQuad(100, 100);
             quad.scaleX = 0.0;
             
             var tween:Tween = new Tween(quad, 1.0);
@@ -136,7 +136,7 @@ package tests
         
         private function executeTween(time:Number, advanceTime:Number):void
         {
-            var quad:Quad = new Quad(100, 100);
+            var quad:StQuad = new StQuad(100, 100);
             var tween:Tween = new Tween(quad, time);
             tween.animate("x", 100);
             

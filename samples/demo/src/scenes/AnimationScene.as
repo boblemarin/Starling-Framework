@@ -3,20 +3,20 @@ package scenes
     import starling.animation.Transitions;
     import starling.animation.Tween;
     import starling.core.Starling;
-    import starling.display.Button;
-    import starling.display.Image;
-    import starling.events.Event;
-    import starling.text.TextField;
+    import starling.display.StButton;
+    import starling.display.StImage;
+    import starling.events.StEvent;
+    import starling.text.StTextField;
     import starling.textures.Texture;
     import starling.utils.Color;
     import starling.utils.deg2rad;
 
     public class AnimationScene extends Scene
     {
-        private var mStartButton:Button;
-        private var mDelayButton:Button;
-        private var mEgg:Image;
-        private var mTransitionLabel:TextField;
+        private var mStartButton:StButton;
+        private var mDelayButton:StButton;
+        private var mEgg:StImage;
+        private var mTransitionLabel:StTextField;
         private var mTransitions:Array;
         
         public function AnimationScene()
@@ -28,25 +28,25 @@ package scenes
             var buttonTexture:Texture = Assets.getTexture("ButtonNormal");
             
             // create a button that starts the tween
-            mStartButton = new Button(buttonTexture, "Start animation");
-            mStartButton.addEventListener(Event.TRIGGERED, onStartButtonTriggered);
+            mStartButton = new StButton(buttonTexture, "Start animation");
+            mStartButton.addEventListener(StEvent.TRIGGERED, onStartButtonTriggered);
             mStartButton.x = Constants.CenterX - int(mStartButton.width / 2);
             mStartButton.y = 20;
             addChild(mStartButton);
             
             // this button will show you how to call a method with a delay
-            mDelayButton = new Button(buttonTexture, "Delayed call");
-            mDelayButton.addEventListener(Event.TRIGGERED, onDelayButtonTriggered);
+            mDelayButton = new StButton(buttonTexture, "Delayed call");
+            mDelayButton.addEventListener(StEvent.TRIGGERED, onDelayButtonTriggered);
             mDelayButton.x = mStartButton.x;
             mDelayButton.y = mStartButton.y + 40;
             addChild(mDelayButton);
             
             // the egg will be tweened
-            mEgg = new Image(Assets.getTexture("EggOpened"));
+            mEgg = new StImage(Assets.getTexture("EggOpened"));
             addChild(mEgg);
             resetEgg();
             
-            mTransitionLabel = new TextField(320, 30, "");
+            mTransitionLabel = new StTextField(320, 30, "");
             mTransitionLabel.y = mDelayButton.y + 40;
             mTransitionLabel.alpha = 0.0; // invisible, will be shown later
             addChild(mTransitionLabel);
@@ -60,7 +60,7 @@ package scenes
             mEgg.rotation = 0.0;
         }
         
-        private function onStartButtonTriggered(event:Event):void
+        private function onStartButtonTriggered(event:StEvent):void
         {
             mStartButton.enabled = false;
             resetEgg();
@@ -97,7 +97,7 @@ package scenes
             Starling.juggler.add(hideTween);
         }
         
-        private function onDelayButtonTriggered(event:Event):void
+        private function onDelayButtonTriggered(event:StEvent):void
         {
             mDelayButton.enabled = false;
             
@@ -117,8 +117,8 @@ package scenes
         
         public override function dispose():void
         {
-            mStartButton.removeEventListener(Event.TRIGGERED, onStartButtonTriggered);
-            mDelayButton.removeEventListener(Event.TRIGGERED, onDelayButtonTriggered);
+            mStartButton.removeEventListener(StEvent.TRIGGERED, onStartButtonTriggered);
+            mDelayButton.removeEventListener(StEvent.TRIGGERED, onDelayButtonTriggered);
             super.dispose();
         }
     }

@@ -87,7 +87,7 @@ package starling.core
         }
         
         /** Prepends translation, scale and rotation of an object to the modelview matrix. */
-        public function transformMatrix(object:DisplayObject):void
+        public function transformMatrix(object:StDisplayObject):void
         {
             transformMatrixForObject(mModelViewMatrix, object);   
         }
@@ -123,7 +123,7 @@ package starling.core
         }
         
         /** Prepends translation, scale and rotation of an object to a custom matrix. */
-        public static function transformMatrixForObject(matrix:Matrix3D, object:DisplayObject):void
+        public static function transformMatrixForObject(matrix:Matrix3D, object:StDisplayObject):void
         {
             matrix.prependTranslation(object.x, object.y, 0.0);
             matrix.prependRotation(object.rotation / Math.PI * 180.0, Vector3D.Z_AXIS);

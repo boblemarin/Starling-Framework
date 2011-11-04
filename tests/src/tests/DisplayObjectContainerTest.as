@@ -17,10 +17,10 @@ package tests
     import org.flexunit.assertThat;
     import org.hamcrest.number.closeTo;
     
-    import starling.display.Quad;
-    import starling.display.Sprite;
-    import starling.display.Stage;
-    import starling.events.Event;
+    import starling.display.StQuad;
+    import starling.display.StSprite;
+    import starling.display.StStage;
+    import starling.events.StEvent;
     
     public class DisplayObjectContainerTest
     {
@@ -46,9 +46,9 @@ package tests
         [Test]
         public function testChildParentHandling():void
         {
-            var parent:Sprite = new Sprite();
-            var child1:Sprite = new Sprite();
-            var child2:Sprite = new Sprite();
+            var parent:StSprite = new StSprite();
+            var child1:StSprite = new StSprite();
+            var child2:StSprite = new StSprite();
             
             Assert.assertEquals(0, parent.numChildren);
             Assert.assertNull(child1.parent);
@@ -83,7 +83,7 @@ package tests
         [Test]
         public function testRemoveChildren():void
         {
-            var parent:Sprite;
+            var parent:StSprite;
             var numChildren:int = 10;
             
             // removing all children
@@ -109,12 +109,12 @@ package tests
             Assert.assertEquals(5, parent.numChildren);
             Assert.assertEquals("4", parent.getChildAt(4).name);
             
-            function createSprite(numChildren:int):Sprite
+            function createSprite(numChildren:int):StSprite
             {
-                var sprite:Sprite = new Sprite();                
+                var sprite:StSprite = new StSprite();                
                 for (var i:int=0; i<numChildren; ++i)
                 {
-                    var child:Sprite = new Sprite();
+                    var child:StSprite = new StSprite();
                     child.name = i.toString();
                     sprite.addChild(child);
                 }
@@ -125,10 +125,10 @@ package tests
         [Test]
         public function testGetChildByName():void
         {
-            var parent:Sprite = new Sprite();
-            var child1:Sprite = new Sprite();
-            var child2:Sprite = new Sprite();
-            var child3:Sprite = new Sprite();
+            var parent:StSprite = new StSprite();
+            var child1:StSprite = new StSprite();
+            var child2:StSprite = new StSprite();
+            var child3:StSprite = new StSprite();
             
             parent.addChild(child1);
             parent.addChild(child2);
@@ -150,10 +150,10 @@ package tests
         [Test]
         public function testSetChildIndex():void
         {
-            var parent:Sprite = new Sprite();
-            var childA:Sprite = new Sprite();
-            var childB:Sprite = new Sprite();
-            var childC:Sprite = new Sprite();
+            var parent:StSprite = new StSprite();
+            var childA:StSprite = new StSprite();
+            var childB:StSprite = new StSprite();
+            var childC:StSprite = new StSprite();
             
             parent.addChild(childA);
             parent.addChild(childB);
@@ -180,10 +180,10 @@ package tests
         [Test]
         public function testSwapChildren():void
         {
-            var parent:Sprite = new Sprite();
-            var childA:Sprite = new Sprite();
-            var childB:Sprite = new Sprite();
-            var childC:Sprite = new Sprite();
+            var parent:StSprite = new StSprite();
+            var childA:StSprite = new StSprite();
+            var childB:StSprite = new StSprite();
+            var childC:StSprite = new StSprite();
             
             parent.addChild(childA);
             parent.addChild(childB);
@@ -205,13 +205,13 @@ package tests
         [Test]
         public function testWidthAndHeight():void
         {
-            var sprite:Sprite = new Sprite();
+            var sprite:StSprite = new StSprite();
             
-            var quad1:Quad = new Quad(10, 20);
+            var quad1:StQuad = new StQuad(10, 20);
             quad1.x = -10;
             quad1.y = -15;
             
-            var quad2:Quad = new Quad(15, 25);
+            var quad2:StQuad = new StQuad(15, 25);
             quad2.x = 30;
             quad2.y = 25;
             
@@ -233,12 +233,12 @@ package tests
         [Test]
         public function testBounds():void
         {
-            var quad:Quad = new Quad(10, 20);
+            var quad:StQuad = new StQuad(10, 20);
             quad.x = -10;
             quad.y = 10;
             quad.rotation = Math.PI / 2;
             
-            var sprite:Sprite = new Sprite();
+            var sprite:StSprite = new StSprite();
             sprite.addChild(quad);
             
             var bounds:Rectangle = sprite.bounds;
@@ -257,36 +257,36 @@ package tests
         [Test]
         public function testBoundsInSpace():void
         {
-            var root:Sprite = new Sprite();
+            var root:StSprite = new StSprite();
             
-            var spriteA:Sprite = new Sprite();
+            var spriteA:StSprite = new StSprite();
             spriteA.x = 50;
             spriteA.y = 50;
             addQuadToSprite(spriteA);
             root.addChild(spriteA);
             
-            var spriteA1:Sprite = new Sprite();
+            var spriteA1:StSprite = new StSprite();
             spriteA1.x = 150;
             spriteA1.y = 50;
             spriteA1.scaleX = spriteA1.scaleY = 0.5;
             addQuadToSprite(spriteA1);
             spriteA.addChild(spriteA1);
             
-            var spriteA11:Sprite = new Sprite();
+            var spriteA11:StSprite = new StSprite();
             spriteA11.x = 25;
             spriteA11.y = 50;
             spriteA11.scaleX = spriteA11.scaleY = 0.5;
             addQuadToSprite(spriteA11);
             spriteA1.addChild(spriteA11);
             
-            var spriteA2:Sprite = new Sprite();
+            var spriteA2:StSprite = new StSprite();
             spriteA2.x = 50;
             spriteA2.y = 150;
             spriteA2.scaleX = spriteA2.scaleY = 0.5;
             addQuadToSprite(spriteA2);
             spriteA.addChild(spriteA2);
             
-            var spriteA21:Sprite = new Sprite();
+            var spriteA21:StSprite = new StSprite();
             spriteA21.x = 50;
             spriteA21.y = 25;
             spriteA21.scaleX = spriteA21.scaleY = 0.5;
@@ -308,21 +308,21 @@ package tests
             expectedBounds = new Rectangle(0, 394.974762, 100, 100);
             Helpers.compareRectangles(bounds, expectedBounds);
             
-            function addQuadToSprite(sprite:Sprite):void
+            function addQuadToSprite(sprite:StSprite):void
             {
-                sprite.addChild(new Quad(100, 100));
+                sprite.addChild(new StQuad(100, 100));
             }
         }
         
         [Test]
         public function testSize():void
         {
-            var quad1:Quad = new Quad(100, 100);
-            var quad2:Quad = new Quad(100, 100);
+            var quad1:StQuad = new StQuad(100, 100);
+            var quad2:StQuad = new StQuad(100, 100);
             quad2.x = quad2.y = 100;
             
-            var sprite:Sprite = new Sprite();
-            var childSprite:Sprite = new Sprite();
+            var sprite:StSprite = new StSprite();
+            var childSprite:StSprite = new StSprite();
             
             sprite.addChild(childSprite);
             childSprite.addChild(quad1);
@@ -341,8 +341,8 @@ package tests
         [Test]
         public function testAddExistingChild():void
         {
-            var sprite:Sprite = new Sprite();
-            var quad:Quad = new Quad(100, 100);
+            var sprite:StSprite = new StSprite();
+            var quad:StQuad = new StQuad(100, 100);
             sprite.addChild(quad);
             sprite.addChild(quad);
             Assert.assertEquals(1, sprite.numChildren);
@@ -352,17 +352,17 @@ package tests
         [Test]
         public function testDisplayListEvents():void
         {
-            var stage:Stage = new Stage(100, 100);
-            var sprite:Sprite = new Sprite();
-            var quad:Quad = new Quad(20, 20);
+            var stage:StStage = new StStage(100, 100);
+            var sprite:StSprite = new StSprite();
+            var quad:StQuad = new StQuad(20, 20);
             
-            quad.addEventListener(Event.ADDED, onAdded);
-            quad.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-            quad.addEventListener(Event.REMOVED, onRemoved);
-            quad.addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+            quad.addEventListener(StEvent.ADDED, onAdded);
+            quad.addEventListener(StEvent.ADDED_TO_STAGE, onAddedToStage);
+            quad.addEventListener(StEvent.REMOVED, onRemoved);
+            quad.addEventListener(StEvent.REMOVED_FROM_STAGE, onRemovedFromStage);
             
-            stage.addEventListener(Event.ADDED, onAddedChild);
-            stage.addEventListener(Event.REMOVED, onRemovedChild);
+            stage.addEventListener(StEvent.ADDED, onAddedChild);
+            stage.addEventListener(StEvent.REMOVED, onRemovedChild);
             
             sprite.addChild(quad);            
             Assert.assertEquals(1, mAdded);
@@ -400,14 +400,14 @@ package tests
         [Test]
         public function testRemovedFromStage():void
         {
-            var stage:Stage = new Stage(100, 100);
-            var sprite:Sprite = new Sprite();
+            var stage:StStage = new StStage(100, 100);
+            var sprite:StSprite = new StSprite();
             stage.addChild(sprite);
-            sprite.addEventListener(Event.REMOVED_FROM_STAGE, onSpriteRemovedFromStage);
+            sprite.addEventListener(StEvent.REMOVED_FROM_STAGE, onSpriteRemovedFromStage);
             sprite.removeFromParent();
             Assert.assertEquals(1, mRemovedFromStage);
             
-            function onSpriteRemovedFromStage(e:Event):void
+            function onSpriteRemovedFromStage(e:StEvent):void
             {
                 // stage should still be accessible in event listener
                 Assert.assertNotNull(sprite.stage);
@@ -415,12 +415,12 @@ package tests
             }
         }
         
-        private function onAdded(event:Event):void { mAdded++; }
-        private function onAddedToStage(event:Event):void { mAddedToStage++; }
-        private function onAddedChild(event:Event):void { mAddedChild++; }
+        private function onAdded(event:StEvent):void { mAdded++; }
+        private function onAddedToStage(event:StEvent):void { mAddedToStage++; }
+        private function onAddedChild(event:StEvent):void { mAddedChild++; }
         
-        private function onRemoved(event:Event):void { mRemoved++; }
-        private function onRemovedFromStage(event:Event):void { mRemovedFromStage++; }
-        private function onRemovedChild(event:Event):void { mRemovedChild++; }
+        private function onRemoved(event:StEvent):void { mRemoved++; }
+        private function onRemovedFromStage(event:StEvent):void { mRemovedFromStage++; }
+        private function onRemovedChild(event:StEvent):void { mRemovedChild++; }
     }
 }

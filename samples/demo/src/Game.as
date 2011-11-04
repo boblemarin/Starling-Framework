@@ -13,15 +13,15 @@ package
     import scenes.TextureScene;
     import scenes.TouchScene;
     
-    import starling.display.Button;
-    import starling.display.Image;
-    import starling.display.Sprite;
-    import starling.events.Event;
+    import starling.display.StButton;
+    import starling.display.StImage;
+    import starling.display.StSprite;
+    import starling.events.StEvent;
     import starling.textures.Texture;
 
-    public class Game extends Sprite
+    public class Game extends StSprite
     {
-        private var mMainMenu:Sprite;
+        private var mMainMenu:StSprite;
         private var mCurrentScene:Scene;
         
         public function Game()
@@ -30,13 +30,13 @@ package
             Assets.prepareSounds();
             Assets.loadBitmapFonts();
             
-            var bg:Image = new Image(Assets.getTexture("Background"));
+            var bg:StImage = new StImage(Assets.getTexture("Background"));
             addChild(bg);
             
-            mMainMenu = new Sprite();
+            mMainMenu = new StSprite();
             addChild(mMainMenu);
             
-            var logo:Image = new Image(Assets.getTexture("Logo"));
+            var logo:StImage = new StImage(Assets.getTexture("Logo"));
             logo.x = int((bg.width - logo.width) / 2);
             logo.y = 50;
             mMainMenu.addChild(logo);
@@ -60,11 +60,11 @@ package
                 var sceneTitle:String = sceneToCreate[0];
                 var sceneClass:Class  = sceneToCreate[1];
                 
-                var button:Button = new Button(buttonTexture, sceneTitle);
+                var button:StButton = new StButton(buttonTexture, sceneTitle);
                 button.x = count % 2 == 0 ? 28 : 167;
                 button.y = 180 + int(count / 2) * 52;
                 button.name = getQualifiedClassName(sceneClass);
-                button.addEventListener(Event.TRIGGERED, onButtonTriggered);
+                button.addEventListener(StEvent.TRIGGERED, onButtonTriggered);
                 mMainMenu.addChild(button);
                 ++count;
             }
@@ -72,13 +72,13 @@ package
             addEventListener(Scene.CLOSING, onSceneClosing);
         }
         
-        private function onButtonTriggered(event:Event):void
+        private function onButtonTriggered(event:StEvent):void
         {
-            var button:Button = event.target as Button;
+            var button:StButton = event.target as StButton;
             showScene(button.name);
         }
         
-        private function onSceneClosing(event:Event):void
+        private function onSceneClosing(event:StEvent):void
         {
             mCurrentScene.removeFromParent(true);
             mCurrentScene = null;

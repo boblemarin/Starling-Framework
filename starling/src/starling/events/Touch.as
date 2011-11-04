@@ -13,7 +13,7 @@ package starling.events
     import flash.geom.Matrix;
     import flash.geom.Point;
     
-    import starling.display.DisplayObject;
+    import starling.display.StDisplayObject;
 
     /** A Touch object contains information about the presence or movement of a finger 
      *  or the mouse on the screen.
@@ -42,11 +42,11 @@ package starling.events
         private var mPreviousGlobalY:Number;
         private var mTapCount:int;
         private var mPhase:String;
-        private var mTarget:DisplayObject;
+        private var mTarget:StDisplayObject;
         private var mTimestamp:Number;
         
         /** Creates a new Touch object. */
-        public function Touch(id:int, globalX:Number, globalY:Number, phase:String, target:DisplayObject)
+        public function Touch(id:int, globalX:Number, globalY:Number, phase:String, target:StDisplayObject)
         {
             mID = id;
             mGlobalX = mPreviousGlobalX = globalX;
@@ -58,7 +58,7 @@ package starling.events
         
         /** Converts the current location of a touch to the local coordinate system of a display 
          *  object. */
-        public function getLocation(space:DisplayObject):Point
+        public function getLocation(space:StDisplayObject):Point
         {
             var point:Point = new Point(mGlobalX, mGlobalY);
             var transformationMatrix:Matrix = mTarget.root.getTransformationMatrix(space);
@@ -67,7 +67,7 @@ package starling.events
         
         /** Converts the previous location of a touch to the local coordinate system of a display 
          *  object. */
-        public function getPreviousLocation(space:DisplayObject):Point
+        public function getPreviousLocation(space:StDisplayObject):Point
         {
             var point:Point = new Point(mPreviousGlobalX, mPreviousGlobalY);
             var transformationMatrix:Matrix = mTarget.root.getTransformationMatrix(space);
@@ -108,7 +108,7 @@ package starling.events
         public function get phase():String { return mPhase; }
         
         /** The display object at which the touch occurred. */
-        public function get target():DisplayObject { return mTarget; }
+        public function get target():StDisplayObject { return mTarget; }
         
         /** The moment the touch occurred (in seconds since application start). */
         public function get timestamp():Number { return mTimestamp; }
@@ -131,7 +131,7 @@ package starling.events
         internal function setTapCount(value:int):void { mTapCount = value; }
         
         /** @private */
-        internal function setTarget(value:DisplayObject):void { mTarget = value; }
+        internal function setTarget(value:StDisplayObject):void { mTarget = value; }
         
         /** @private */
         internal function setTimestamp(value:Number):void { mTimestamp = value; }

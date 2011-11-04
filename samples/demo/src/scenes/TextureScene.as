@@ -1,6 +1,6 @@
 package scenes
 {
-    import starling.display.Image;
+    import starling.display.StImage;
     import starling.textures.Texture;
     import starling.textures.TextureAtlas;
 
@@ -12,22 +12,22 @@ package scenes
             
             var atlas:TextureAtlas = Assets.getTextureAtlas();
             
-            var image1:Image = new Image(atlas.getTexture("walk_00"));
+            var image1:StImage = new StImage(atlas.getTexture("walk_00"));
             image1.x = 30;
             image1.y = 20;
             addChild(image1);
             
-            var image2:Image = new Image(atlas.getTexture("walk_01"));
+            var image2:StImage = new StImage(atlas.getTexture("walk_01"));
             image2.x = 90;
             image2.y = 50;
             addChild(image2);
             
-            var image3:Image = new Image(atlas.getTexture("walk_03"));
+            var image3:StImage = new StImage(atlas.getTexture("walk_03"));
             image3.x = 150;
             image3.y = 80;
             addChild(image3);
             
-            var image4:Image = new Image(atlas.getTexture("walk_05"));
+            var image4:StImage = new StImage(atlas.getTexture("walk_05"));
             image4.x = 210;
             image4.y = 110;
             addChild(image4);
@@ -35,7 +35,7 @@ package scenes
             // display a compressed texture
             
             var compressedTexture:Texture = Assets.getTexture("CompressedTexture");
-            var image:Image = new Image(compressedTexture);
+            var image:StImage = new StImage(compressedTexture);
             image.x = Constants.CenterX - image.width / 2;
             image.y = 280;
             addChild(image);

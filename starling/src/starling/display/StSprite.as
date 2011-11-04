@@ -11,10 +11,10 @@
 package starling.display
 {
     import starling.core.RenderSupport;
-    import starling.events.Event;
+    import starling.events.StEvent;
 
     /** Dispatched on all children when the object is flattened. */
-    [Event(name="flatten", type="starling.events.Event")]
+    [Event(name="flatten", type="starling.events.StEvent")]
     
     /** A Sprite is the most lightweight, non-abstract container class.
      *  <p>Use it as a simple means of grouping objects together in one coordinate system, or
@@ -34,12 +34,12 @@ package starling.display
      *  @see DisplayObject
      *  @see DisplayObjectContainer
      */  
-    public class Sprite extends DisplayObjectContainer
+    public class StSprite extends StDisplayObjectContainer
     {
         private var mFlattenedContents:Vector.<QuadGroup>;
         
         /** Creates an empty sprite. */
-        public function Sprite()
+        public function StSprite()
         {
             super();
         }
@@ -57,7 +57,7 @@ package starling.display
         public function flatten():void
         {
             unflatten();
-            dispatchEventOnChildren(new Event(Event.FLATTEN));
+            dispatchEventOnChildren(new StEvent(StEvent.FLATTEN));
             mFlattenedContents = QuadGroup.compile(this);
         }
         

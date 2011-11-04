@@ -3,28 +3,28 @@ package scenes
     import flash.media.Sound;
     
     import starling.core.Starling;
-    import starling.display.MovieClip;
-    import starling.events.Event;
-    import starling.text.TextField;
+    import starling.display.StMovieClip;
+    import starling.events.StEvent;
+    import starling.text.StTextField;
     import starling.textures.Texture;
     import starling.utils.HAlign;
     import starling.utils.VAlign;
 
     public class MovieScene extends Scene
     {
-        private var mMovie:MovieClip;
+        private var mMovie:StMovieClip;
         
         public function MovieScene()
         {
             var description:String = "Animation provided by angryanimator.com";
-            var infoText:TextField = new TextField(300, 30, description);
+            var infoText:StTextField = new StTextField(300, 30, description);
             infoText.x = infoText.y = 10;
             infoText.vAlign = VAlign.TOP;
             infoText.hAlign = HAlign.CENTER;
             addChild(infoText);
             
             var frames:Vector.<Texture> = Assets.getTextureAtlas().getTextures("walk_");
-            mMovie = new MovieClip(frames, 12);
+            mMovie = new StMovieClip(frames, 12);
             
             // add sounds
             var stepSound:Sound = Assets.getSound("Step");
@@ -38,24 +38,24 @@ package scenes
             
             // like any animation, the movie needs to be added to the juggler!
             // this is the recommended way to do that.
-            addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-            addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+            addEventListener(StEvent.ADDED_TO_STAGE, onAddedToStage);
+            addEventListener(StEvent.REMOVED_FROM_STAGE, onRemovedFromStage);
         }
         
-        private function onAddedToStage(event:Event):void
+        private function onAddedToStage(event:StEvent):void
         {
             Starling.juggler.add(mMovie);
         }
         
-        private function onRemovedFromStage(event:Event):void
+        private function onRemovedFromStage(event:StEvent):void
         {
             Starling.juggler.remove(mMovie);
         }
         
         public override function dispose():void
         {
-            removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
-            removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+            removeEventListener(StEvent.REMOVED_FROM_STAGE, onRemovedFromStage);
+            removeEventListener(StEvent.ADDED_TO_STAGE, onAddedToStage);
             super.dispose();
         }
     }

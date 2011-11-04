@@ -21,7 +21,7 @@ package starling.events
      *  
      *  @see starling.display.Stage
      */  
-    public class KeyboardEvent extends Event
+    public class StKeyboardEvent extends StEvent
     {
         /** Event type for a key that was released. */
         public static const KEY_UP:String = "keyUp";
@@ -37,7 +37,7 @@ package starling.events
         private var mShiftKey:Boolean;
         
         /** Creates a new KeyboardEvent. */
-        public function KeyboardEvent(type:String, charCode:uint=0, keyCode:uint=0, 
+        public function StKeyboardEvent(type:String, charCode:uint=0, keyCode:uint=0, 
                                       keyLocation:uint=0, ctrlKey:Boolean=false, 
                                       altKey:Boolean=false, shiftKey:Boolean=false)
         {

@@ -13,11 +13,11 @@ package starling.display
     import flash.media.Sound;
     
     import starling.animation.IAnimatable;
-    import starling.events.Event;
+    import starling.events.StEvent;
     import starling.textures.Texture;
     
     /** Dispatched whenever the movie has displayed its last frame. */
-    [Event(name="movieCompleted", type="starling.events.Event")]
+    [Event(name="movieCompleted", type="starling.events.StEvent")]
     
     /** A MovieClip is a simple way to display an animation depicted by a list of textures.
      *  
@@ -39,7 +39,7 @@ package starling.display
      *  
      *  @see starling.textures.TextureAtlas
      */    
-    public class MovieClip extends Image implements IAnimatable
+    public class StMovieClip extends StImage implements IAnimatable
     {
         private var mTextures:Vector.<Texture>;
         private var mSounds:Vector.<Sound>;
@@ -54,7 +54,7 @@ package starling.display
         
         /** Creates a moviclip from the provided textures and with the specified default framerate.
          *  The movie will have the size of the first frame. */  
-        public function MovieClip(textures:Vector.<Texture>, fps:Number=12)
+        public function StMovieClip(textures:Vector.<Texture>, fps:Number=12)
         {            
             if (textures.length > 0)
             {
@@ -221,9 +221,9 @@ package starling.display
             }
             
             if (previousTime < mTotalTime && mCurrentTime == mTotalTime &&
-                hasEventListener(Event.MOVIE_COMPLETED))
+                hasEventListener(StEvent.MOVIE_COMPLETED))
             {
-                dispatchEvent(new Event(Event.MOVIE_COMPLETED));
+                dispatchEvent(new StEvent(StEvent.MOVIE_COMPLETED));
             }
                 
             advanceTime(carryOverTime);

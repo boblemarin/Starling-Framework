@@ -12,7 +12,7 @@ package starling.text
 {
     import flash.utils.Dictionary;
     
-    import starling.display.Image;
+    import starling.display.StImage;
     import starling.textures.Texture;
 
     /** A BitmapChar contains the information about one char of a bitmap font.  
@@ -57,9 +57,9 @@ package starling.text
         }
         
         /** Creates an image of the char. */
-        public function createImage():Image
+        public function createImage():StImage
         {
-            return new Image(mTexture);
+            return new StImage(mTexture);
         }
         
         /** The unicode ID of the char. */

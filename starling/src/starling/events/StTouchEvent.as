@@ -10,8 +10,8 @@
 
 package starling.events
 {
-    import starling.display.DisplayObject;
-    import starling.display.DisplayObjectContainer;
+    import starling.display.StDisplayObject;
+    import starling.display.StDisplayObjectContainer;
     
     /** A TouchEvent is triggered either by touch or mouse input.  
      *  
@@ -50,7 +50,7 @@ package starling.events
      *  
      *  @see Touch
      */ 
-    public class TouchEvent extends Event
+    public class StTouchEvent extends StEvent
     {
         /** Event type for touch or mouse input. */
         public static const TOUCH:String = "touch";
@@ -60,7 +60,7 @@ package starling.events
         private var mCtrlKey:Boolean;
         
         /** Creates a new TouchEvent instance. */
-        public function TouchEvent(type:String, touches:Vector.<Touch>, shiftKey:Boolean=false, 
+        public function StTouchEvent(type:String, touches:Vector.<Touch>, shiftKey:Boolean=false, 
                                    ctrlKey:Boolean=false, bubbles:Boolean=true)
         {
             super(type, bubbles);
@@ -70,14 +70,14 @@ package starling.events
         }
         
         /** Returns a list of touches that originated over a certain target. */
-        public function getTouches(target:DisplayObject, phase:String=null):Vector.<Touch>
+        public function getTouches(target:StDisplayObject, phase:String=null):Vector.<Touch>
         {
             var touchesFound:Vector.<Touch> = new <Touch>[];
             for each (var touch:Touch in mTouches)
             {
                 var correctTarget:Boolean = (touch.target == target) ||
-                    ((target is DisplayObjectContainer) && 
-                     (target as DisplayObjectContainer).contains(touch.target));
+                    ((target is StDisplayObjectContainer) && 
+                     (target as StDisplayObjectContainer).contains(touch.target));
                 var correctPhase:Boolean = (phase == null || phase == touch.phase);
                     
                 if (correctTarget && correctPhase)
@@ -87,7 +87,7 @@ package starling.events
         }
         
         /** Returns a touch that originated over a certain target. */
-        public function getTouch(target:DisplayObject, phase:String=null):Touch
+        public function getTouch(target:StDisplayObject, phase:String=null):Touch
         {
             var touchesFound:Vector.<Touch> = getTouches(target, phase);
             if (touchesFound.length > 0) return touchesFound[0];

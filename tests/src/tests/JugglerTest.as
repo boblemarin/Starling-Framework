@@ -17,7 +17,7 @@ package tests
     
     import starling.animation.Juggler;
     import starling.animation.Tween;
-    import starling.display.Quad;
+    import starling.display.StQuad;
 
     public class JugglerTest
     {
@@ -27,7 +27,7 @@ package tests
         public function testModificationWithinCallback():void
         {
             var juggler:Juggler = new Juggler();
-            var quad:Quad = new Quad(100, 100);
+            var quad:StQuad = new StQuad(100, 100);
             var tween:Tween = new Tween(quad, 1.0);
             var startReached:Boolean = false;
             juggler.add(tween);
@@ -55,8 +55,8 @@ package tests
         {
             var juggler:Juggler = new Juggler();
             
-            var quad1:Quad = new Quad(100, 100);
-            var quad2:Quad = new Quad(100, 100);
+            var quad1:StQuad = new StQuad(100, 100);
+            var quad2:StQuad = new StQuad(100, 100);
             
             var tween1:Tween = new Tween(quad1, 1.0);
             var tween2:Tween = new Tween(quad2, 1.0);

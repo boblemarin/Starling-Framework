@@ -19,12 +19,12 @@ package starling.text
     import flash.utils.Dictionary;
     
     import starling.core.RenderSupport;
-    import starling.display.DisplayObject;
-    import starling.display.DisplayObjectContainer;
-    import starling.display.Image;
-    import starling.display.Quad;
-    import starling.display.Sprite;
-    import starling.events.Event;
+    import starling.display.StDisplayObject;
+    import starling.display.StDisplayObjectContainer;
+    import starling.display.StImage;
+    import starling.display.StQuad;
+    import starling.display.StSprite;
+    import starling.events.StEvent;
     import starling.textures.Texture;
     import starling.utils.HAlign;
     import starling.utils.VAlign;
@@ -58,7 +58,7 @@ package starling.text
      *        71squared (commercial). It supports Starling natively.</li>
      *  </ul> 
      */
-    public class TextField extends DisplayObjectContainer
+    public class StTextField extends StDisplayObjectContainer
     {
         private var mFontSize:Number;
         private var mColor:uint;
@@ -74,10 +74,10 @@ package starling.text
         private var mRequiresRedraw:Boolean;
         private var mIsRenderedText:Boolean;
         
-        private var mHitArea:DisplayObject;
-        private var mTextArea:DisplayObject;
-        private var mContents:DisplayObject;
-        private var mBorder:DisplayObjectContainer;
+        private var mHitArea:StDisplayObject;
+        private var mTextArea:StDisplayObject;
+        private var mContents:StDisplayObject;
+        private var mBorder:StDisplayObjectContainer;
         
         // this object will be used for text rendering
         private static var sNativeTextField:flash.text.TextField = new flash.text.TextField();
@@ -86,7 +86,7 @@ package starling.text
         private static var sBitmapFonts:Dictionary = new Dictionary();
         
         /** Create a new text field with the given properties. */
-        public function TextField(width:int, height:int, text:String, fontName:String="Verdana",
+        public function StTextField(width:int, height:int, text:String, fontName:String="Verdana",
                                   fontSize:Number=12, color:uint=0x0, bold:Boolean=false)
         {
             mText = text;
@@ -98,29 +98,29 @@ package starling.text
             mKerning = true;
             this.fontName = fontName;
             
-            mHitArea = new Quad(width, height);
+            mHitArea = new StQuad(width, height);
             mHitArea.alpha = 0.0;
             addChild(mHitArea);
             
-            mTextArea = new Quad(width, height);
+            mTextArea = new StQuad(width, height);
             mTextArea.visible = false;
             addChild(mTextArea);
             
-            addEventListener(Event.FLATTEN, onFlatten);
+            addEventListener(StEvent.FLATTEN, onFlatten);
         }
         
         /** Disposes the underlying texture data. */
         public override function dispose():void
         {
-            removeEventListener(Event.FLATTEN, onFlatten);
+            removeEventListener(StEvent.FLATTEN, onFlatten);
             
-            if (mContents is Image)
-               (mContents as Image).texture.dispose();
+            if (mContents is StImage)
+               (mContents as StImage).texture.dispose();
             
             super.dispose();
         }
         
-        private function onFlatten(event:Event):void
+        private function onFlatten(event:StEvent):void
         {
             if (mRequiresRedraw) redrawContents();
         }
@@ -144,9 +144,9 @@ package starling.text
             addChild(mContents);
         }
         
-        private function createRenderedContents():DisplayObject
+        private function createRenderedContents():StDisplayObject
         {
-            if (mText.length == 0) return new Sprite();
+            if (mText.length == 0) return new StSprite();
             
             var width:Number  = mHitArea.width;
             var height:Number = mHitArea.height;
@@ -193,7 +193,7 @@ package starling.text
             mTextArea.width = textWidth;
             mTextArea.height = textHeight;
             
-            var contents:Image = new Image(Texture.fromBitmapData(bitmapData));
+            var contents:StImage = new StImage(Texture.fromBitmapData(bitmapData));
             contents.color = mColor;
             
             return contents;
@@ -215,16 +215,16 @@ package starling.text
             }
         }
         
-        private function createComposedContents():DisplayObject
+        private function createComposedContents():StDisplayObject
         {
             var bitmapFont:BitmapFont = sBitmapFonts[mFontName];
             if (bitmapFont == null) throw new Error("Bitmap font not registered: " + mFontName);
             
-            var contents:DisplayObject = bitmapFont.createDisplayObject(
+            var contents:StDisplayObject = bitmapFont.createDisplayObject(
                 mHitArea.width, mHitArea.height, mText, mFontSize, mColor, mHAlign, mVAlign,
                 mAutoScale, mKerning);
             
-            var textBounds:Rectangle = (contents as DisplayObjectContainer).bounds;
+            var textBounds:Rectangle = (contents as StDisplayObjectContainer).bounds;
             mTextArea.x = textBounds.x;
             mTextArea.y = textBounds.y;
             mTextArea.width  = textBounds.width;
@@ -240,10 +240,10 @@ package starling.text
             var width:Number  = mHitArea.width;
             var height:Number = mHitArea.height;
             
-            var topLine:Quad    = mBorder.getChildAt(0) as Quad;
-            var rightLine:Quad  = mBorder.getChildAt(1) as Quad;
-            var bottomLine:Quad = mBorder.getChildAt(2) as Quad;
-            var leftLine:Quad   = mBorder.getChildAt(3) as Quad;
+            var topLine:StQuad    = mBorder.getChildAt(0) as StQuad;
+            var rightLine:StQuad  = mBorder.getChildAt(1) as StQuad;
+            var bottomLine:StQuad = mBorder.getChildAt(2) as StQuad;
+            var leftLine:StQuad   = mBorder.getChildAt(3) as StQuad;
             
             topLine.width    = width; topLine.height    = 1;
             bottomLine.width = width; bottomLine.height = 1;
@@ -262,7 +262,7 @@ package starling.text
         }
         
         /** @inheritDoc */
-        public override function getBounds(targetSpace:DisplayObject):Rectangle
+        public override function getBounds(targetSpace:StDisplayObject):Rectangle
         {
             return mHitArea.getBounds(targetSpace);
         }
@@ -335,7 +335,7 @@ package starling.text
                 if (mContents)
                 {
                    if (mIsRenderedText)
-                       (mContents as Image).color = value;
+                       (mContents as StImage).color = value;
                    else
                        mRequiresRedraw = true;
                 }
@@ -377,11 +377,11 @@ package starling.text
         {
             if (value && mBorder == null)
             {                
-                mBorder = new Sprite();
+                mBorder = new StSprite();
                 addChild(mBorder);
                 
                 for (var i:int=0; i<4; ++i)
-                    mBorder.addChild(new Quad(1.0, 1.0));
+                    mBorder.addChild(new StQuad(1.0, 1.0));
                 
                 updateBorder();
             }

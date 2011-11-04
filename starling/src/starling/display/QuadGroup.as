@@ -82,7 +82,7 @@ package starling.display
             
             var pma:Boolean = mVertexData.premultipliedAlpha;
             var program:String = mTexture ? 
-                Image.getProgramName(mMipMapping, mRepeat, mSmoothing) : Quad.PROGRAM_NAME;
+                StImage.getProgramName(mMipMapping, mRepeat, mSmoothing) : StQuad.PROGRAM_NAME;
             var alphaVector:Vector.<Number> = pma ? new <Number>[alpha, alpha, alpha, alpha] : 
                                                     new <Number>[1.0, 1.0, 1.0, alpha];
             
@@ -113,7 +113,7 @@ package starling.display
         public function get repeat():Boolean { return mRepeat; }
         public function get mipMapping():Boolean { return mMipMapping; }
         
-        public static function compile(container:DisplayObjectContainer):Vector.<QuadGroup>
+        public static function compile(container:StDisplayObjectContainer):Vector.<QuadGroup>
         {
             var quadGroups:Vector.<QuadGroup> = new <QuadGroup>[];
             var matrixStack:Vector.<Matrix3D> = new <Matrix3D>[new Matrix3D()];
@@ -128,7 +128,7 @@ package starling.display
             return quadGroups;
         }
         
-        private static function compileObject(object:DisplayObject, 
+        private static function compileObject(object:StDisplayObject, 
                                               quadGroups:Vector.<QuadGroup>,
                                               matrixStack:Vector.<Matrix3D>, 
                                               alphaStack:Vector.<Number>):void
@@ -140,14 +140,14 @@ package starling.display
             var currentAlpha:Number = alphaStack[alphaStack.length-1];
             var i:int;
             
-            if (object is DisplayObjectContainer)
+            if (object is StDisplayObjectContainer)
             {
-                var container:DisplayObjectContainer = object as DisplayObjectContainer;
+                var container:StDisplayObjectContainer = object as StDisplayObjectContainer;
                 var numChildren:int = container.numChildren;
                 
                 for (i=0; i<numChildren; ++i)
                 {
-                    var child:DisplayObject = container.getChildAt(i);
+                    var child:StDisplayObject = container.getChildAt(i);
                     
                     var childMatrix:Matrix3D = currentMatrix.clone();
                     RenderSupport.transformMatrixForObject(childMatrix, child);
@@ -161,9 +161,9 @@ package starling.display
                     alphaStack.pop();
                 }
             }
-            else if (object is Quad)
+            else if (object is StQuad)
             {
-                var quad:Quad = object as Quad;
+                var quad:StQuad = object as StQuad;
                 var vertexData:VertexData = quad.vertexData;
                 
                 for (i=0; i<4; ++i)
@@ -177,7 +177,7 @@ package starling.display
                 var repeat:Boolean = false;
                 var mipMapping:Boolean = false;
                 var pma:Boolean = true;
-                var image:Image = object as Image;
+                var image:StImage = object as StImage;
                 
                 if (image)
                 {

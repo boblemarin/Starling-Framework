@@ -1,6 +1,6 @@
 package scenes
 {
-    import starling.text.TextField;
+    import starling.text.StTextField;
     import starling.utils.HAlign;
     import starling.utils.VAlign;
     
@@ -14,7 +14,7 @@ package scenes
                 "Pushing the egg only works when the touch occurs within a circle." + 
                 "This can be accomplished by overriding the method 'hitTest'.";
             
-            var infoText:TextField = new TextField(300, 100, description);
+            var infoText:StTextField = new StTextField(300, 100, description);
             infoText.x = infoText.y = 10;
             infoText.vAlign = VAlign.TOP;
             infoText.hAlign = HAlign.CENTER;

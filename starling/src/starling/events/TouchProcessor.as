@@ -12,8 +12,8 @@ package starling.events
 {
     import flash.geom.Point;
     
-    import starling.display.DisplayObject;
-    import starling.display.Stage;
+    import starling.display.StDisplayObject;
+    import starling.display.StStage;
 
     /** @private
      *  The TouchProcessor is used internally to convert mouse and touch events of the conventional
@@ -23,7 +23,7 @@ package starling.events
         private static const MULTITAP_TIME:Number = 0.3;
         private static const MULTITAP_DISTANCE:Number = 25;
         
-        private var mStage:Stage;
+        private var mStage:StStage;
         private var mElapsedTime:Number;        
         private var mTouchMarker:TouchMarker;
         
@@ -34,7 +34,7 @@ package starling.events
         private var mShiftDown:Boolean = false;
         private var mCtrlDown:Boolean = false;
         
-        public function TouchProcessor(stage:Stage)
+        public function TouchProcessor(stage:StStage)
         {
             mStage = stage;
             mElapsedTime = 0;
@@ -42,14 +42,14 @@ package starling.events
             mQueue = new <Array>[];
             mLastTaps = new <Touch>[];
             
-            mStage.addEventListener(KeyboardEvent.KEY_DOWN, onKey);
-            mStage.addEventListener(KeyboardEvent.KEY_UP,   onKey);
+            mStage.addEventListener(StKeyboardEvent.KEY_DOWN, onKey);
+            mStage.addEventListener(StKeyboardEvent.KEY_UP,   onKey);
         }
 
         public function dispose():void
         {
-            mStage.removeEventListener(KeyboardEvent.KEY_DOWN, onKey);
-            mStage.removeEventListener(KeyboardEvent.KEY_UP,   onKey);
+            mStage.removeEventListener(StKeyboardEvent.KEY_DOWN, onKey);
+            mStage.removeEventListener(StKeyboardEvent.KEY_UP,   onKey);
             if (mTouchMarker) mTouchMarker.dispose();
         }
         
@@ -72,7 +72,7 @@ package starling.events
                 var touchID:int;
                 var touch:Touch;
                 var hoverTouch:Touch = null;
-                var hoverTarget:DisplayObject = null;
+                var hoverTarget:StDisplayObject = null;
                 
                 // update existing touches
                 for each (var currentTouch:Touch in mCurrentTouches)
@@ -110,7 +110,7 @@ package starling.events
                 // target to notify it that it's no longer being hovered over.
                 if (hoverTarget && hoverTouch.target != hoverTarget)
                 {
-                    hoverTarget.dispatchEvent(new TouchEvent(TouchEvent.TOUCH, mCurrentTouches,
+                    hoverTarget.dispatchEvent(new StTouchEvent(StTouchEvent.TOUCH, mCurrentTouches,
                                                              mShiftDown, mCtrlDown));
                 }
                 
@@ -118,7 +118,7 @@ package starling.events
                 for each (touchID in processedTouchIDs)
                 {
                     touch = getCurrentTouch(touchID);
-                    touch.target.dispatchEvent(new TouchEvent(TouchEvent.TOUCH, mCurrentTouches,
+                    touch.target.dispatchEvent(new StTouchEvent(StTouchEvent.TOUCH, mCurrentTouches,
                                                               mShiftDown, mCtrlDown));
                 }
                 
@@ -170,12 +170,12 @@ package starling.events
                 processTap(touch);
         }
         
-        private function onKey(event:KeyboardEvent):void
+        private function onKey(event:StKeyboardEvent):void
         {
             if (event.keyCode == 17) // ctrl key
             {
                 var wasCtrlDown:Boolean = mCtrlDown;
-                mCtrlDown = event.type == KeyboardEvent.KEY_DOWN;
+                mCtrlDown = event.type == StKeyboardEvent.KEY_DOWN;
                 
                 if (simulateMultitouch && wasCtrlDown != mCtrlDown)
                 {
@@ -197,7 +197,7 @@ package starling.events
             }
             else if (event.keyCode == 16) // shift key 
             {
-                mShiftDown = event.type == KeyboardEvent.KEY_DOWN;
+                mShiftDown = event.type == StKeyboardEvent.KEY_DOWN;
             }
         }
         
