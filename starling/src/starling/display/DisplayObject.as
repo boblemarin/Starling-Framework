@@ -108,6 +108,8 @@ package starling.display
         private var mAlpha:Number;
         private var mVisible:Boolean;
         private var mTouchable:Boolean;
+		
+		private var mMustRender:Boolean;
         
         private var mName:String;
         private var mLastTouchTimestamp:Number;
@@ -123,6 +125,7 @@ package starling.display
             mScaleX = mScaleY = mAlpha = 1.0;            
             mVisible = mTouchable = true;
             mLastTouchTimestamp = -1;
+			mMustRender = true;
         }
         
         /** Disposes all resources of the display object. 
@@ -310,6 +313,11 @@ package starling.display
         { 
             dispatchEvent(event); 
         }
+		
+		/** @private */
+		internal function checkBeforeRendering():void {
+			mMustRender = (mScaleX!=0) && (mScaleY!=0) && (mAlpha!=0) && mVisible;
+		}
         
         // properties
         
@@ -331,6 +339,9 @@ package starling.display
         {
             return getBounds(mParent);
         }
+		
+		/** true when the objects meets the conditions for rendering ( visible, alpha not zero, scale not zero ) */
+		public function get mustRender():Boolean { return mMustRender }
         
         /** The width of the object in pixels. */
         public function get width():Number { return getBounds(mParent).width; }        
@@ -343,6 +354,7 @@ package starling.display
             var actualWidth:Number = width;
             if (actualWidth != 0.0) scaleX = value / actualWidth;
             else                    scaleX = 1.0;
+			checkBeforeRendering();
         }
         
         /** The height of the object in pixels. */
@@ -353,6 +365,7 @@ package starling.display
             var actualHeight:Number = height;
             if (actualHeight != 0.0) scaleY = value / actualHeight;
             else                     scaleY = 1.0;
+			checkBeforeRendering();
         }
         
         /** The topmost object in the display tree the object is part of. */
@@ -381,11 +394,11 @@ package starling.display
         
         /** The horizontal scale factor. '1' means no scale, negative values flip the object. */
         public function get scaleX():Number { return mScaleX; }
-        public function set scaleX(value:Number):void { mScaleX = value; }
+        public function set scaleX(value:Number):void { mScaleX = value; checkBeforeRendering(); }
         
         /** The vertical scale factor. '1' means no scale, negative values flip the object. */
         public function get scaleY():Number { return mScaleY; }
-        public function set scaleY(value:Number):void { mScaleY = value; }
+        public function set scaleY(value:Number):void { mScaleY = value; checkBeforeRendering(); }
         
         /** The rotation of the object in radians. (In Starling, all angles are measured 
          *  in radians.) */
@@ -403,11 +416,12 @@ package starling.display
         public function set alpha(value:Number):void 
         { 
             mAlpha = Math.max(0.0, Math.min(1.0, value)); 
+			checkBeforeRendering();
         }
         
         /** The visibility of the object. An invisible object will be untouchable. */
         public function get visible():Boolean { return mVisible; }
-        public function set visible(value:Boolean):void { mVisible = value; }
+        public function set visible(value:Boolean):void { mVisible = value; checkBeforeRendering(); }
         
         /** Indicates if this object (and its children) will receive touch events. */
         public function get touchable():Boolean { return mTouchable; }
